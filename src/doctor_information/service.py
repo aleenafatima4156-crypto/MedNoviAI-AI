@@ -25,6 +25,8 @@ class DoctorInformationService:
         if context is None:
             context = DoctorConversationContext()
 
+        context.previous_queries.append(query)
+
         intent = detect_intent(query)
 
         if intent == DoctorInformationIntent.UNKNOWN:
@@ -60,6 +62,7 @@ class DoctorInformationService:
 
             context.active_doctor = doctor.doctor_name
             context.active_doctor_id = doctor.doctor_id
+            context.active_specialty = doctor.specialty
             context.last_intent = intent.value
 
             return DoctorInformationResponse(
